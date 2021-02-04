@@ -10,12 +10,18 @@ function App() {
 
   useEffect(() =>{
     axios.get("https://randomuser.me/api/?results=25").then(response => {
+      const responseArray = response.data.results
+      console.log("response:", responseArray)
+      const sortedArray = responseArray.sort((a, b) => a.name.first.localeCompare(b.name.first))
+      console.log(sortedArray)
       setUserArray( response.data.results)
     }).catch(err => console.log(err));
   }, [])
+
+
   
 
- console.log(userArray)
+ 
 
   return (
     <div className="App">
@@ -30,7 +36,7 @@ function App() {
           <th>Phone</th>
         </tr>
         {userArray.map(result =>
-        <tr>
+        <tr key={result.login.uuid}>
         <td>{result.name.first}</td>
         <td>{result.name.last}</td>
         <td>{result.email}</td>
