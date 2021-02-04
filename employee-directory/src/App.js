@@ -11,7 +11,6 @@ function App() {
   useEffect(() =>{
     axios.get("https://randomuser.me/api/?results=25").then(response => {
       const responseArray = response.data.results
-      console.log("response:", responseArray)
       const sortedArray = responseArray.sort((a, b) => a.name.first.localeCompare(b.name.first))
       console.log(sortedArray)
       setUserArray( response.data.results)
