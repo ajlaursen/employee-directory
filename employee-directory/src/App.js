@@ -17,19 +17,32 @@ function App() {
           a.name.first.localeCompare(b.name.first)
         );
         setUserArray(sortedArray);
-        const natArray = []
-        // i need help filtering this array to only be unique elements but then add an id into them
+
+        // i feel like there should be an easier way to do the below process
+
+        // creating an array with only nationalities
+        const transferArray = []
         sortedArray.forEach(function(element, index) {
-          natArray.push({"id": index, "nat":element.nat })
+          transferArray.push(element.nat)
         });
-        const uniqueArray = natArray.filter(function(item, pos) {
-          return natArray.indexOf(item) === pos;
-      })
-      console.log(uniqueArray)
-        setNatArray(uniqueArray)
+
+        // filtering duplicates out of list
+        const toBeKeyedArray = transferArray.filter(function(item, pos) {
+          return transferArray.indexOf(item) === pos;
+        })
+        
+        // adding key to list for react purposes 
+        const listArray = []
+        toBeKeyedArray.forEach(function(element, index) {
+          listArray.push({"key": index +1, "nat": element})
+        })
+
+        console.log("sortedArray",sortedArray)
+      console.log("natArray",listArray)
+        setNatArray(listArray)
       })
       .catch((err) => console.log(err));
-  }, []);
+  },[]);
 
  
 // need help being able to use the drop down menu you filter by country
@@ -43,7 +56,7 @@ function App() {
       <select className="form-select" aria-label="Default select example">
         <option defaultValue>Select Country</option>
         {natArray.map((result) => (
-          <option key={result.id} value="1">
+          <option key={result.key} value={result.nat}>
             {result.nat}
           </option>
         ))}
