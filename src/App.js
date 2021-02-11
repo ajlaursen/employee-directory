@@ -7,6 +7,7 @@ function App() {
   const [userArray, setUserArray] = useState([]);
   // nationalities in list
   const [natArray, setNatArray] = useState([]);
+  // array to be rendered
   const [filteredArray, setFilteredArray] = useState([]);
 
   useEffect(() => {
@@ -17,10 +18,12 @@ function App() {
         const sortedArray = responseArray.sort((a, b) =>
           a.name.first.localeCompare(b.name.first)
         );
+        // initial array set
         setUserArray(sortedArray);
         setFilteredArray(sortedArray);
 
-        // i feel like there should be an easier way to do the below process
+        // easier way to do commented out code below
+        // sets array to be used for selector bar
 
         const natsArray = Array.from(
           new Set(sortedArray.map((x) => x.nat))
@@ -51,20 +54,16 @@ function App() {
   function handleListChange(e) {
     switch (e.target.value) {
       case "Select Country":
-        // need to return to full user array
         setFilteredArray(userArray);
         break;
       default:
+        // filters displayed array by user nationality
         const employeeFilteredArray = userArray.filter((element) => {
           return e.target.value === element.nat;
         });
         setFilteredArray(employeeFilteredArray);
     }
-    console.log("we changed", e.target.value);
-
-    // take the array and then filter from result then reset user array
   }
-  // need help being able to use the drop down menu you filter by country
 
   return (
     <div className="App">
